@@ -1,0 +1,83 @@
+@* Definindo a rota do componente *@
+@page "/criar-conta"
+
+@* Importando os namespaces necessários *@
+@using TarefasAppBlazor.Services.Model.Requests;
+@using TarefasAppBlazor.Services.Model.Responses;
+@using TarefasAppBlazor.Services.Helpers;
+
+<div class="row">
+	<div class="col-md-6 offset-md-3">
+		<div class="card">
+			<div class="card-body">
+
+				<div class="text-center">
+					<h2>Agenda de Tarefas</h2>
+					<p>Criar conta de usuário</p>
+					<hr />
+				</div>
+
+				<div class="mb-3 text-center">
+					<strong class="text-secondary">@mensagemProcessamento</strong>
+					<strong class="text-success">@mensagemSucesso</strong>
+					<strong class="text-danger">@mensagemErro</strong>
+				</div>
+
+				@* Criando um componente de formulário do blazor *@
+				<EditForm Model="@model" OnValidSubmit="@OnSubmit">
+
+					@* Componente para ativar as validações dos campos *@
+					<DataAnnotationsValidator />
+
+					<div class="mb-2">
+						<label>Nome do usuário:</label>
+						@* Componente para campo do tipo texto *@
+						<InputText class="form-control" @bind-Value="model.Nome" />
+						<span class="text-danger">
+							@* Componente para exibição de mensagens de erro de validação *@
+							<ValidationMessage For="@(() => model.Nome)" />
+						</span>
+					</div>
+
+					<div class="mb-2">
+						<label>Email de acesso:</label>
+						@* Componente para campo do tipo texto *@
+						<InputText class="form-control" @bind-Value="model.Email" />
+						<span class="text-danger">
+							@* Componente para exibição de mensagens de erro de validação *@
+							<ValidationMessage For="@(() => model.Email)" />
+						</span>
+					</div>
+
+					<div class="mb-2">
+						<label>Senha de acesso:</label>
+						@* Componente para campo do tipo texto *@
+						<InputText type="password" class="form-control" @bind-Value="model.Senha" />
+						<span class="text-danger">
+							@* Componente para exibição de mensagens de erro de validação *@
+							<ValidationMessage For="@(() => model.Senha)" />
+						</span>
+					</div>
+
+					<div class="mb-2">
+						<label>Confirme sua senha:</label>
+						@* Componente para campo do tipo texto *@
+						<InputText type="password" class="form-control" @bind-Value="model.SenhaConfirmacao" />
+						<span class="text-danger">
+							@* Componente para exibição de mensagens de erro de validação *@
+							<ValidationMessage For="@(() => model.SenhaConfirmacao)" />
+						</span>
+					</div>
+
+					<div class="mb-2">
+						<div class="d-grid">
+							<input type="submit" class="btn btn-primary" value="Realizar Cadastro" />
+						</div>
+					</div>
+
+				</EditForm>
+
+			</div>
+		</div>
+	</div>
+</div>
