@@ -1,36 +1,31 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components;
-using System.Net.Http;
-using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Components.Routing;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Components.Web.Virtualization;
-using Microsoft.JSInterop;
-using TarefasAppBlazor.UI;
-using TarefasAppBlazor.UI.Shared;
 using TarefasAppBlazor.Services.Model.Requests;
 using TarefasAppBlazor.Services.Helpers;
 using TarefasAppBlazor.Services.Model.Responses;
+using TarefasAppBlazor.UI.Helpers;
+using Microsoft.AspNetCore.Components;
 
 namespace TarefasAppBlazor.UI.Pages
 {
     public partial class Autenticar
     {
+        [Inject]
+        private AuthenticationHelper AuthenticationHelper { get; set; }
+
+        [Inject]
+        private NavigationManager NavigationManager { get; set; }
+
         //Definindo o modelo de dados do componente
         private AutenticarRequestModel model = new();
 
         //mensagens
         private string? mensagemProcessamento;
         private string? mensagemSucesso;
-        private string? mensagemErro;
+        private string? mensagemErro;       
 
         //função para capturar o SUBMIT do formulário
         protected async Task OnSubmit()
         {
-            mensagemProcessamento = "Processando, por favor aguarde...";            
+            mensagemProcessamento = "Processando, por favor aguarde...";
             mensagemSucesso = string.Empty;
             mensagemErro = string.Empty;
 
@@ -40,7 +35,11 @@ namespace TarefasAppBlazor.UI.Pages
                 var servicesHelper = new ServicesHelper();
                 var result = await servicesHelper.Post<AutenticarRequestModel, AutenticarResponseModel>("autenticar", model);
                 mensagemSucesso = $"Parabéns {result.Nome}, autenticação realizada com sucesso!";
-                model = new AutenticarRequestModel();
+                model = new AutenticarRequestModel(); //limpar formulário
+
+                await AuthenticationHelper.SignIn(result);
+
+                NavigationManager.NavigateTo("app/dashboard", true);
             }
             catch (Exception e)
             {
@@ -52,6 +51,4 @@ namespace TarefasAppBlazor.UI.Pages
             }
         }
     }
-}
-
 }

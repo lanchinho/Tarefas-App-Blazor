@@ -1,41 +1,90 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">Agenda de Tarefas</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </div>
+﻿@using TarefasAppBlazor.UI.Helpers
+
+@inject AuthenticationHelper AuthenticationHelper
+@inject NavigationManager NavigationManager
+
+<div class="top-row ps-3 navbar navbar-dark">
+	<div class="container-fluid">
+		<a class="navbar-brand" href="">Agenda de Tarefas</a>
+		<button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+	</div>
 </div>
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-account-login" aria-hidden="true"></span> Autenticar
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="criar-conta">
-                <span class="oi oi-plus" aria-hidden="true"></span> Criar Conta
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="recuperar-senha">
-                <span class="oi oi-envelope-open" aria-hidden="true"></span> Recuperar Senha
-            </NavLink>
-        </div>
-    </nav>
+	<nav class="flex-column">
+
+		@if (isAuthenticated)
+		{
+			<div class="nav-item px-3">
+				<NavLink class="nav-link" href="app/dashboard">
+					<span class="oi oi-home" aria-hidden="true"></span> Dashboard
+				</NavLink>
+			</div>
+			<div class="nav-item px-3">
+				<NavLink class="nav-link" href="app/cadastrar-tarefas">
+					<span class="oi oi-plus" aria-hidden="true"></span> Cadastrar Tarefas
+				</NavLink>
+			</div>
+			<div class="nav-item px-3">
+				<NavLink class="nav-link" href="app/consultar-tarefas">
+					<span class="oi oi-list" aria-hidden="true"></span> Consultar Tarefas
+				</NavLink>
+			</div>
+			<div class="nav-item px-3">
+				<NavLink class="nav-link" href="app/dados-usuario">
+					<span class="oi oi-people" aria-hidden="true"></span> Dados Usuário
+				</NavLink>
+			</div>
+			<div class="nav-item px-3">
+				<NavLink class="nav-link" href="app/dados-usuario" @onclick="Logout">
+					<span class="oi oi-people" aria-hidden="true"></span> Sair do Sistema
+				</NavLink>
+			</div>
+		}
+		else
+		{
+			<div class="nav-item px-3">
+				<NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+					<span class="oi oi-account-login" aria-hidden="true"></span> Autenticar
+				</NavLink>
+			</div>
+			<div class="nav-item px-3">
+				<NavLink class="nav-link" href="criar-conta">
+					<span class="oi oi-plus" aria-hidden="true"></span> Criar Conta
+				</NavLink>
+			</div>
+			<div class="nav-item px-3">
+				<NavLink class="nav-link" href="recuperar-senha">
+					<span class="oi oi-envelope-open" aria-hidden="true"></span> Recuperar Senha
+				</NavLink>
+			</div>
+		}
+	</nav>
 </div>
 
 @code {
-    private bool collapseNavMenu = true;
+	private bool collapseNavMenu = true;
+	private bool isAuthenticated = false;
 
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+	private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
+	private void ToggleNavMenu()
+	{
+		collapseNavMenu = !collapseNavMenu;
+	}
+
+	protected override async Task OnInitializedAsync()
+	{
+		isAuthenticated = await AuthenticationHelper.IsSignIn();
+	}
+
+	private async Task Logout()
+	{
+		await AuthenticationHelper.SignOut();
+		NavigationManager.NavigateTo("/", true);
+	}
 }
 
 

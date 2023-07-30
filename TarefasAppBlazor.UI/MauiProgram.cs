@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Blazored.LocalStorage;
+using Microsoft.Extensions.Logging;
+using TarefasAppBlazor.UI.Helpers;
 
 namespace TarefasAppBlazor.UI;
 
@@ -15,6 +17,8 @@ public static class MauiProgram
             });
 
         builder.Services.AddMauiBlazorWebView();
+        builder.Services.AddBlazoredLocalStorage();
+        builder.Services.AddTransient<AuthenticationHelper>();
 
 #if DEBUG
         builder.Services.AddBlazorWebViewDeveloperTools();

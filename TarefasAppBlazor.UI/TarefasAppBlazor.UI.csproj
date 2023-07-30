@@ -50,15 +50,12 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="Blazored.LocalStorage" Version="4.3.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\TarefasAppBlazor.Services\TarefasAppBlazor.Services.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Pages\" />
     </ItemGroup>
 
 </Project>
