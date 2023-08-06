@@ -11,6 +11,7 @@
         <div class="mb-3">
             <strong class="text-secondary">@mensagemProcessamento</strong>
             <strong class="text-danger">@mensagemErro</strong>
+            <strong class="text-success">@mensagemSucesso</strong>
         </div>
 
         @foreach (var item in model)
@@ -27,8 +28,8 @@
                         <br />
                         <small>@item.Descricao</small>
                     </p>
-                    <a href="#" class="btn btn-primary">Editar</a>
-                    <a href="#" class="btn btn-danger">Excluir</a>
+                    <NavLink href="@OnEdit(item.Id.Value)" class="btn btn-primary">Editar</NavLink>
+                    <button @onclick="(()=> OnDelete(item.Id.Value))" class="btn btn-danger">Excluir</button>
                 </div>
             </div>
         }

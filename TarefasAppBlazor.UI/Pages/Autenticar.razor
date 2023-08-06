@@ -1,57 +1,61 @@
 @* Definindo a rota do componente *@
 @page "/"
-<div class="row">
-    <div class="col-md-6 offset-md-3">
-        <div class="card">
-            <div class="card-body">
 
-                <div class="text-center">
-                    <h2>Agenda de Tarefas</h2>
-                    <p>Acesso ao sistema</p>
-                    <hr />
-                </div>
+@if (!isLoading)
+{
+	<div class="row">
+		<div class="col-md-6 offset-md-3">
+			<div class="card">
+				<div class="card-body">
 
-                <div class="mb-3 text-center">
-                    <strong class="text-secondary">@mensagemProcessamento</strong>
-                    <strong class="text-success">@mensagemSucesso</strong>
-                    <strong class="text-danger">@mensagemErro</strong>
-                </div>
+					<div class="text-center">
+						<h2>Agenda de Tarefas</h2>
+						<p>Acesso ao sistema</p>
+						<hr />
+					</div>
 
-                @* Criando um componente de formulário do blazor *@
-                <EditForm Model="@model" OnValidSubmit="@OnSubmit">
+					<div class="mb-3 text-center">
+						<strong class="text-secondary">@mensagemProcessamento</strong>
+						<strong class="text-success">@mensagemSucesso</strong>
+						<strong class="text-danger">@mensagemErro</strong>
+					</div>
 
-                    @* Componente para ativar as validações dos campos *@
-                    <DataAnnotationsValidator />
+					@* Criando um componente de formulário do blazor *@
+					<EditForm Model="@model" OnValidSubmit="@OnSubmit">
 
-                    <div class="mb-2">
-                        <label>Email de acesso:</label>
-                        @* Componente para campo do tipo texto *@
-                        <InputText class="form-control" @bind-Value="model.Email" />
-                        <span class="text-danger">
-                            @* Componente para exibição de mensagens de erro de validação *@
-                            <ValidationMessage For="@(() => model.Email)" />
-                        </span>
-                    </div>
+						@* Componente para ativar as validações dos campos *@
+						<DataAnnotationsValidator />
 
-                    <div class="mb-2">
-                        <label>Senha de acesso:</label>
-                        @* Componente para campo do tipo texto *@
-                        <InputText type="password" class="form-control" @bind-Value="model.Senha" />
-                        <span class="text-danger">
-                            @* Componente para exibição de mensagens de erro de validação *@
-                            <ValidationMessage For="@(() => model.Senha)" />
-                        </span>
-                    </div>
+						<div class="mb-2">
+							<label>Email de acesso:</label>
+							@* Componente para campo do tipo texto *@
+							<InputText class="form-control" @bind-Value="model.Email" />
+							<span class="text-danger">
+								@* Componente para exibição de mensagens de erro de validação *@
+								<ValidationMessage For="@(() => model.Email)" />
+							</span>
+						</div>
 
-                    <div class="mb-2">
-                        <div class="d-grid">
-                            <input type="submit" class="btn btn-primary" value="Acessar Agenda" />
-                        </div>
-                    </div>
+						<div class="mb-2">
+							<label>Senha de acesso:</label>
+							@* Componente para campo do tipo texto *@
+							<InputText type="password" class="form-control" @bind-Value="model.Senha" />
+							<span class="text-danger">
+								@* Componente para exibição de mensagens de erro de validação *@
+								<ValidationMessage For="@(() => model.Senha)" />
+							</span>
+						</div>
 
-                </EditForm>
+						<div class="mb-2">
+							<div class="d-grid">
+								<input type="submit" class="btn btn-primary" value="Acessar Agenda" />
+							</div>
+						</div>
 
-            </div>
-        </div>
-    </div>
-</div>
+					</EditForm>
+
+				</div>
+			</div>
+		</div>
+	</div>
+}
