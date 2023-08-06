@@ -1,20 +1,42 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using System.Net.Http;
-using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Components.Routing;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Components.Web.Virtualization;
-using Microsoft.JSInterop;
-using TarefasAppBlazor.UI;
-using TarefasAppBlazor.UI.Shared;
+using TarefasAppBlazor.UI.Helpers;
+using TarefasAppBlazor.Services.Helpers;
+using TarefasAppBlazor.Services.Model.Responses;
 
 namespace TarefasAppBlazor.UI.Pages.App
 {
-    public partial class ConsultarTarefas
-    {
-    }
+	public partial class ConsultarTarefas
+	{
+		[Inject]
+		AuthenticationHelper AuthenticationHelper { get; set; }
+
+		private List<TarefasConsultaResponseModel> model = new();
+
+		//mensagens
+		private string? mensagemProcessamento;
+		private string? mensagemErro;
+
+		protected override async Task OnInitializedAsync()
+		{
+			try
+			{
+				mensagemProcessamento = "Processando, por favor aguarde...";
+
+				var user = await AuthenticationHelper.GetUser();
+
+				var servicesHelper = new ServicesHelper(user.AccessToken);
+				model.AddRange(await servicesHelper.Get<List<TarefasConsultaResponseModel>>("tarefas"));
+			}
+			catch (Exception e)
+			{
+				mensagemErro = e.Message;
+			}
+			finally
+			{
+				mensagemProcessamento = string.Empty;
+			}
+		}
+	}
 }
+
+

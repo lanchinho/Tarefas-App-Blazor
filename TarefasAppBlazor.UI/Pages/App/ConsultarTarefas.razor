@@ -1,5 +1,41 @@
-﻿@page "/app/consultar-tarefas"
+﻿@* Definir a rota da página *@
+@page "/app/consultar-tarefas"
 
-<h3>Consultar Tarefas</h3>
+<div class="card m-2">
+    <div class="card-body">
+
+        <h2>Consulta de Tarefas</h2>
+        <p>Listagem de tarefas cadastradas em sua agenda.</p>
+        <hr />
+
+        <div class="mb-3">
+            <strong class="text-secondary">@mensagemProcessamento</strong>
+            <strong class="text-danger">@mensagemErro</strong>
+        </div>
+
+        @foreach (var item in model)
+        {
+            <div class="card mb-2">
+                <div class="card-body">
+                    <h5 class="card-title">@item.Nome</h5>
+                    <p class="card-text">
+                        de
+                        <span>@item.DataInicio.Value.ToString("ddd dd/MM/yyyy")</span>
+                        até <span>@item.DataFim.Value.ToString("ddd dd/MM/yyyy")</span>
+                        <br />
+                        <span class="badge bg-secondary">@item.Categoria</span>
+                        <br />
+                        <small>@item.Descricao</small>
+                    </p>
+                    <a href="#" class="btn btn-primary">Editar</a>
+                    <a href="#" class="btn btn-danger">Excluir</a>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+
+
 
 

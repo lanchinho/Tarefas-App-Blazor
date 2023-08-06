@@ -1,5 +1,80 @@
-﻿@page "/app/cadastrar-tarefas"
+﻿@* Definir a rota da página *@
+@page "/app/cadastrar-tarefas"
 
-<h3>Cadastrar Tarefas</h3>
+<div class="card m-2">
+    <div class="card-body">
+
+        <h2>Cadastro de Tarefas</h2>
+        <p>Inclua tarefas em sua agenda.</p>
+        <hr />
+
+        <div class="mb-3">
+            <strong class="text-secondary">@mensagemProcessamento</strong>
+            <strong class="text-success">@mensagemSucesso</strong>
+            <strong class="text-danger">@mensagemErro</strong>
+        </div>
+
+        <EditForm Model="@model" OnValidSubmit="@OnSubmit">
+            <DataAnnotationsValidator/>
+            <div class="row mb-2">
+                <div class="col-md-6">
+                    <label>Nome da tarefa:</label>
+                    <InputText @bind-Value="model.Nome" class="form-control" />
+                    <span class="text-danger">
+                        <ValidationMessage For="@(() => model.Nome)" />
+                    </span>
+                </div>
+                <div class="col-md-3">
+                    <label>Data de início:</label>
+                    <InputDate @bind-Value="model.DataInicio" class="form-control" />
+                    <span class="text-danger">
+                        <ValidationMessage For="@(() => model.DataInicio)" />
+                    </span>
+                </div>
+                <div class="col-md-3">
+                    <label>Data de fim:</label>
+                    <InputDate @bind-Value="model.DataFim" class="form-control" />
+                    <span class="text-danger">
+                        <ValidationMessage For="@(() => model.DataFim)" />
+                    </span>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-md-3">
+                    <label>Selecione a categoria:</label>
+                    <InputSelect @bind-Value="model.Categoria" class="form-select">
+                        <option value="">Escolha uma opção</option>
+                        @foreach (var item in Categorias)
+                        {
+                            <option value="@item">@item</option>
+                        }
+                    </InputSelect>
+                    <span class="text-danger">
+                        <ValidationMessage For="@(() => model.Categoria)" />
+                    </span>
+                </div>
+                <div class="col-md-9">
+                    <label>Descrição da tarefa:</label>
+                    <InputTextArea @bind-Value="model.Descricao" class="form-control" />
+                    <span class="text-danger">
+                        <ValidationMessage For="@(() => model.Descricao)" />
+                    </span>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-md-12">
+                    <input type="submit" class="btn btn-success"
+                           value="Realizar Cadastro" />
+                </div>
+            </div>
+
+        </EditForm>
+
+    </div>
+</div>
+
+
 
 
