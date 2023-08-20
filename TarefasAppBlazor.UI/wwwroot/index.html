@@ -23,7 +23,58 @@
     </div>
 
     <script src="_framework/blazor.webview.js" autostart="false"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+
+    <script>
+
+        //função para desenhar um gráfico do highcharts
+        function createChart(data, title, element) {
+
+            //capturar os dados que irão popular o gráfico
+            var obj = [...data];
+            var array = [];
+
+            //organizando os dados para o formato do gráfico
+            for (var i = 0; i < obj.length; i++) {
+                array.push([
+                    obj[i].categoria, obj[i].quantidade
+                ]);
+            }
+
+            //criando o gráfico
+            new Highcharts.Chart({
+                chart: {
+                    type: 'pie',
+                    renderTo: element
+                },
+                title: {
+                    text: title
+                },
+                plotOptions: {
+                    pie: {
+                        innerSize: '60%',
+                        dataLabels: {
+                            enable: true
+                        },
+                        showInLegend: true
+                    }
+                },
+                series: [
+                    { data: array }
+                ]
+            });
+        }
+
+        //função para remover um gráfico
+        function destroyChart(element) {
+            $('#' + element).highcharts().destroy();
+        }
+
+    </script>
 
 </body>
 
 </html>
+
+
