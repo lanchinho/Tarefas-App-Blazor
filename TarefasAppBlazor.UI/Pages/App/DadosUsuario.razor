@@ -1,0 +1,84 @@
+﻿@* Definindo a rota da página *@
+@page "/app/dados-usuario"
+
+<div class="card m-2">
+    <div class="card-body">
+
+        <h2>Dados do usuário</h2>
+        <p>Informações do usuário autenticado</p>
+        <hr />
+
+        <div class="mb-2">
+            ID do usuário: <br />
+            <span><strong>@usuario.IdUsuario</strong></span>
+        </div>
+
+        <div class="mb-2">
+            Nome do usuário: <br />
+            <span><strong>@usuario.Nome</strong></span>
+        </div>
+
+        <div class="mb-2">
+            Email do usuário: <br />
+            <span><strong>@usuario.Email</strong></span>
+        </div>
+
+    </div>
+</div>
+
+<div class="card m-2">
+    <div class="card-body">
+
+        <h2>Alterar senha de acesso</h2>
+        <p>Modifique sua senha de acesso do aplicativo.</p>
+        <hr />
+
+        <div class="mb-3">
+            <strong class="text-secondary">@mensagemProcessamento</strong>
+            <strong class="text-success">@mensagemSucesso</strong>
+            <strong class="text-danger">@mensagemErro</strong>
+        </div>
+
+        <EditForm Model="@model" OnValidSubmit="@OnSubmit">
+            <DataAnnotationsValidator />
+
+            <div class="row mb-2">
+                <div class="col">
+                    <label>Senha atual:</label>
+                    <InputText type="password" @bind-Value="model.SenhaAtual"
+                               class="form-control" />
+                    <span class="text-danger">
+                        <ValidationMessage For="@(() => model.SenhaAtual)" />
+                    </span>
+                </div>
+                <div class="col">
+                    <label>Nova senha:</label>
+                    <InputText type="password" @bind-Value="model.NovaSenha"
+                               class="form-control" />
+                    <span class="text-danger">
+                        <ValidationMessage For="@(() => model.NovaSenha)" />
+                    </span>
+                </div>
+                <div class="col">
+                    <label>Confirme a nova senha:</label>
+                    <InputText type="password" @bind-Value="model.NovaSenhaConfirmacao"
+                               class="form-control" />
+                    <span class="text-danger">
+                        <ValidationMessage For="@(() => model.NovaSenhaConfirmacao)" />
+                    </span>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col">
+                    <input type="submit" class="btn btn-success" value="Salvar Alterações" />
+                </div>
+            </div>
+
+        </EditForm>
+
+    </div>
+</div>
+
+
+

@@ -25,7 +25,7 @@ namespace TarefasAppBlazor.Services.Model.Requests
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirme a sua senha:")]
-        //[Compare("Senha", ErrorMessage = "Senhas não conferem.")]
+        [Compare("Senha", ErrorMessage = "Senhas não conferem.")]
         [Required(ErrorMessage = "Por favor, confirme sua senha de acesso.")]
         public string? SenhaConfirmacao { get; set; }
     }
